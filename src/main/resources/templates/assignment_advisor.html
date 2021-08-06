@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th ="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Advisor Management System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Undergraduate Advisors</a>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="@{/advisors}">Advisors View</a>-->
+<!--            </li>-->
+            <!--            <li class="nav-item">-->
+            <!--                <a class="nav-link" href="#">Link</a>-->
+            <!--            </li>-->
+            <!--            <li class="nav-item">-->
+            <!--                <a class="nav-link" href="#">Link</a>-->
+            <!--            </li>-->
+        </ul>
+    </div>
+</nav>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center">Update Advisor Alpha Assignment</h1>
+            <div class="card-body">
+                <form th:action ="@{/assignments}" th:object ="${assignment}" method="POST">
+                    <div class="form-group">
+                        <label>Advisor ID</label>
+                        <input type="text" name="id"  th:field ="*{advisorid}" class ="form-control" placeholder="Enter Advisor ID"></div>
+                    <label>Advisor First Name</label>
+                    <input type="text" name="id"  class ="form-control" th:field="*{advisor.firstName}" placeholder="Enter Advisor ID">
+                    <div for="majors"> <label>Major:</label>
+                        <br/>
+<!--                      <select class="form-control" th:field = "${major.majorid}" id="majorid">-->
+<!--                          <option value="0">Choose Major</option>-->
+<!--                          <option th:each = "major : ${majors}" th:value ="${major.majorid}" th:text ="${major.majorname}";-->
+<!--                      </select>-->
+
+                       <select th:field="*{majorid}">
+                           <option value=""></option>
+                           <option th:each="major:${majors}"
+                                   th:value="${major.majorid}"
+                                   th:text="${major.majorname}"
+                                   th:name="${major.majorname}"
+                                    />
+                        </select>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="input-group">
+                        <label>Alpha Assignment:</label>
+                        <br/>
+                        <br/>
+                        <!-- declaration for first field -->
+                        <input type="text" class="form-control input-sm" th:field ="*{alpha1}" value="alpha 1 " />
+                        <!-- reducing the gap between them to zero -->
+                        <span class="input-group-btn" style="width:10px;">-</span>
+                        <!-- declaration for second field -->
+                        <input type="text" class="form-control input-sm" th:field="*{alpha2}" value="alpha 2" />
+                    </div>
+<!--                    <div class="form-group">  <label>Alpha1</label>-->
+<!--                        <input type="text" name="lastname"  class ="form-control" placeholder="Enter Alpha1"> </div>-->
+<!--                    <div class="form-group"> <label>Alpha2</label>-->
+<!--                        <input type="text" name="email"  class ="form-control" placeholder="Enter Alpha2"> </div>-->
+                    <div class="box-footer">
+                        <button type ="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>Assignment ID</th>
+            <th>Major ID</th>
+            <th>Alpha1</th>
+            <th>Alpha2</th>
+            <th>Advisor ID</th>
+            <th>Actions</th>
+        </tr></thead>
+        <tbody>
+        <tr th:each = "assignment:${assignments}">
+            <td th:text="${assignment.assignmentid}"></td>
+             <td th:text ="${assignment.major.majorid}"></td>
+            <td th:text ="${assignment.alpha1}"></td>
+            <td th:text ="${assignment.alpha2}"></td>
+            <td th:text ="${assignment.advisor.id}"></td>
+            <td>
+                <a th:href ="@{/assignments/edit/{id}(id=${assignment.assignmentid})}" class="btn btn-primary">Update Assignment
+                </a>
+                <br/>
+                <a th:href ="@{/assignments/{id}(id=${assignment.assignmentid})}" class="btn btn-danger">Delete
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+</body>
+</html>

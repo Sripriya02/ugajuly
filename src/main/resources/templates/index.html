@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th ="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UnderGraduate Advising</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        h1 { text-align: center;}
+        h2 {
+            text-align: center;}
+        div.container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#" >Undergraduate Advisors</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <!--            <li class="nav-item">-->
+            <!--                <a class="nav-link" href="@{/advisors}">Advisors View</a>-->
+            <!--            </li>-->
+            <!--            <li class="nav-item">-->
+            <!--                <a class="nav-link" href="#">Link</a>-->
+            <!--            </li>-->
+            <!--            <li class="nav-item">-->
+            <!--                <a class="nav-link" href="#">Link</a>-->
+            <!--            </li>-->
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <br/>
+   <div id="h1" > <h1>Find your Advisor</h1>
+       <br/>
+       <form th:action ="@{/home}" th:object ="${majors}" >
+        <label>Select Your Major:</label>
+       <br/>
+       <select >
+           <option value=""></option>
+           <option
+                   th:each="major:${majors}"
+                   th:value="${major.majorid}"
+                   th:text="${major.majorname}"
+                   th:name="${major.majorname}"
+           />
+       </select>
+       <br/>
+       <br/>
+            <label for="stuName">Enter Your Last Name:</label><br/>
+            <input type="text" id="stuName" name="stuName" style="margin:0 auto;text-align: center;" value=""><br/><br/>
+   </div>
+    <div th:action="@{/home/{stuName}/{majorid}}" class="box-footer">
+        <button type ="submit" th:name = "action" class="btn btn-primary">
+            Submit
+        </button>
+    </div>
+    <br/>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>Advisor ID</th>
+            <th>Advisor Name</th>
+        </tr></thead>
+        <tbody>
+        <tr th:each = "advisor:${advisorsl}">
+            <td th:text="${advisor.id}"></td>
+            <td th:text ="${advisor.firstName}"></td>
+        </tr>
+    </div>
+
+
+</body>
+</html>
